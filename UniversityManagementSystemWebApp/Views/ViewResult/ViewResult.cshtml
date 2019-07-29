@@ -1,0 +1,104 @@
+﻿@model UniversityManagementSystemWebApp.Models.ViewResult
+@{
+    //Layout = null;
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #wrapper {
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    input {
+        width: 240px;
+    }
+    #Grid {
+        width: 50%;
+        margin: 0 auto;
+    }
+</style>
+<div id="wrapper">
+    <hr/>
+    <h3>View Result</h3>
+    <hr/>
+    @using (Html.BeginForm("Export", "ViewResult", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(x => x.RegNo, new {@class = "col-md-3 control-label"})
+            @Html.DropDownListFor(x => x.RegNo, new SelectList(ViewBag.RegNo, "Value", "Text"), new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.RegNo)
+        </div>
+        <div class="form-group">
+            @Html.Label("Name", new {@class = "col-md-3 control-label"})
+            @Html.TextBox("Name", null, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.Label("Email", new {@class = "col-md-3 control-label"})
+            @Html.TextBox("Email", null, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.Label("Department", new {@class = "col-md-3 control-label"})
+            @Html.TextBox("Department", null, new {@class = "form-control"})
+        </div>
+        <div class="col-md-offset-3 col-md-9">
+            <input type="hidden" name="GridHtml"/>
+            <input type="submit" id="PDF" value="Make PDF" class=" btn btn-success" />
+        </div>
+
+    }
+</div>
+<br /><br/>
+<div id="Grid">
+        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 9pt;" width="550">
+            <thead>
+                <tr>
+                    <th style="background-color: #B8DBFD;border: 1px solid #ccc">Course Code</th>
+                    <th style="background-color: #B8DBFD;border: 1px solid #ccc">Name</th>
+                    <th style="background-color: #B8DBFD;border: 1px solid #ccc">Grade</th>
+                </tr>
+            </thead>
+            <tbody id="studentResult"></tbody>
+        </table>
+</div>
+@section Scripts {
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#Name").prop('disabled', true);
+            $("#Email").prop('disabled', true);
+            $("#Department").prop('disabled', true);
+
+
+            $("#RegNo").change(function() {
+                var regNo = $("#RegNo").val();
+                var json =
+                {
+                    registrationNo: regNo
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetRegNoByStudentInfo", "ViewResult")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+                        $("#studentResult").empty();
+                        $.each(data, function(key, value) {
+                            $("#Name").val(value.Name);
+                            $("#Email").val(value.Email);
+                            $("#Department").val(value.DepartmentName);
+                            $("#studentResult").append('<tr> <td>' + value.CourseCode + ' </td> <td> ' + value.CourseName + '</td> <td> ' + value.GradeLetter + '</td> </tr>');
+                        });
+                    }
+                });
+            });
+
+            $("#PDF").click(function() {
+
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
+}

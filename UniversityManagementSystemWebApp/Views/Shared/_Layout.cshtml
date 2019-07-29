@@ -1,0 +1,252 @@
+﻿@*<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>*@
+@*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>*@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title DELL University</title>
+        @Styles.Render("~/Content/css")
+                @Scripts.Render("~/bundles/modernizr")
+        <script src="~/Scripts/jquery-1.12.4.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <link href="~/Content/bootstrap.css" rel="stylesheet"/>
+        @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+        <link href="~/Content/themes/bootstrap-naz.css" rel="stylesheet" />
+        <style>
+            body {
+
+                /*background-image: url(../../Content/image1.jpg);*/
+                background-repeat: no-repeat;
+                /*background-size: 100%;*/
+                /*background-position: center;*/
+                margin-left: 0px;
+                /*margin: 50px;*/
+            }
+            #abc {
+                /*margin-top: 80px;*/
+            }
+            /*.navbar-inverse {
+                background: #111 !important;
+                color: #FFF !important;
+            }*/
+             .navbar-custom {
+                 background-color: #0026ff;
+                 border-color: #e7e7e7;
+             }
+
+            .navbar-custom .navbar-brand {
+                color: #ec971f;
+            }
+
+            .navbar-custom .navbar-brand:hover,
+            .navbar-custom .navbar-brand:focus {
+                color: #5e5e5e;
+                background-color: transparent;
+            }
+
+            .navbar-custom .navbar-text {
+                color: #777;
+            }
+
+            .navbar-custom .navbar-nav > li > a {
+                color: #777;
+            }
+
+            .navbar-custom .navbar-nav > li > a:hover,
+            .navbar-custom .navbar-nav > li > a:focus {
+                color: #333;
+                background-color: transparent;
+            }
+
+            .navbar-custom .navbar-nav > .active > a,
+            .navbar-custom .navbar-nav > .active > a:hover,
+            .navbar-custom .navbar-nav > .active > a:focus {
+                color: #555;
+                background-color: #0a31b1;
+            }
+
+            .navbar-custom .navbar-nav > .disabled > a,
+            .navbar-custom .navbar-nav > .disabled > a:hover,
+            .navbar-custom .navbar-nav > .disabled > a:focus {
+                color: #ccc;
+                background-color: transparent;
+            }
+
+            .navbar-custom .navbar-toggle {
+                border-color: #ddd;
+            }
+
+            .navbar-custom .navbar-toggle:hover,
+            .navbar-custom .navbar-toggle:focus {
+                background-color: #ddd;
+            }
+
+            .navbar-custom .navbar-toggle .icon-bar {
+                background-color: #0a31b1;
+            }
+
+            .navbar-custom .navbar-collapse,
+            .navbar-custom .navbar-form {
+                border-color: #0a31b1;
+            }
+
+            .navbar-custom .navbar-nav > .open > a,
+            .navbar-custom .navbar-nav > .open > a:hover,
+            .navbar-custom .navbar-nav > .open > a:focus {
+                color: #555;
+                background-color: #0a31b1;
+            }
+
+            
+
+            .navbar-custom .navbar-link {
+                color: #777;
+            }
+
+            .navbar-custom .navbar-link:hover {
+                color: #333;
+            }
+
+            .navbar-custom .btn-link {
+                color: #777;
+            }
+
+            .navbar-custom .btn-link:hover,
+            .navbar-custom .btn-link:focus {
+                color: #333;
+            }
+
+            .navbar-custom .btn-link[disabled]:hover,
+            fieldset[disabled] .navbar-custom .btn-link:hover,
+            .navbar-custom .btn-link[disabled]:focus,
+            fieldset[disabled] .navbar-custom .btn-link:focus {
+                color: #ccc;
+            }
+        </style>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active">@Html.ActionLink("Home", "Index", "Home") <span class="sr-only">(current)</span></li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Department <span class="caret"></span></a>
+                            <ul class="dropdown-menu ">
+                                <li>@Html.ActionLink("Save Department", "Save", "Department")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("View All Departments", "ViewAll", "ViewAllDepartment")</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Course <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Save Course", "Save", "Course")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("View Course Statics", "CourseView", "CourseAssign")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Unassign All Courses", "Unassign", "UnassignCourse")</li>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teacher <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Save Teacher", "Save", "Teacher")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Assign Course To Teacher", "CourseAssign", "CourseAssign")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Register Student", "Save", "Student")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Enroll In a Course", "Enroll", "EnrollCourse")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Save Result", "Save", "StudentResult")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("View Result", "ViewResult", "ViewResult")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Class Room Allocation <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Allocate Classroom", "Save", "AllocateCllassroom")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("View Class Schedule", "ClassSchedule", "AllocateCllassroom")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Unallocate All Classrooms", "Unassign", "UnallocateClassrooms")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr id="abc"/>
+
+        <footer>
+            <p>&copy; <i>@DateTime.Now.Year Learn Hunter</i></p>
+        </footer>
+    </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Content/Scripts/bootstrap-hover-dropdown.min.js"></script>
+
+        <script>
+            $(function () {
+                $("ul.nav li.dropdown").hover(function () {
+                    $(".dropdown-menu", this).fadeIn("slow");
+                }, function () {
+                    $(".dropdown-menu", this).fadeOut("slow");
+                });
+            })
+        </script>
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+

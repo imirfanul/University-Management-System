@@ -1,0 +1,114 @@
+﻿@model UniversityManagementSystemWebApp.Models.AllocateClassrooms
+@{
+    ViewBag.Title = "Allocate Classrooms";
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .field-validation-error {
+        margin-left: 180px;
+        color: red;
+    }
+
+    #wrapper {
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    input {
+        width: 240px;
+    }
+</style>
+<link href="~/Content/mdtimepicker.css" rel="stylesheet" />
+<div id="wrapper">
+    <hr />
+    <h3>Allocate Classrooms</h3>
+    <hr />
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { Id = "Allocate" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(x => x.DepartmentId, new { @class = "col-md-3 control-label" })
+            @Html.DropDownListFor(x => x.DepartmentId, new SelectList(ViewBag.Departments, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.DepartmentId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CourseId, new { @class = "col-md-3 control-label" })
+            <select id="CourseId" name="CourseId" class="form-control">
+                <option value="">--Select--</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.CourseId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.RoomId, new { @class = "col-md-3 control-label" })
+            @Html.DropDownListFor(x => x.RoomId, new SelectList(ViewBag.Rooms, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.RoomId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DayId, new { @class = "col-md-3 control-label" })
+            @Html.DropDownListFor(x => x.DayId, new SelectList(ViewBag.Days, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.DayId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FromTime, new { @class = "col-md-3 control-label" })
+            @Html.TextBoxFor(x => x.FromTime, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.FromTime)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ToTime, new { @class = "col-md-3 control-label" })
+            @Html.TextBoxFor(x => x.ToTime, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.ToTime)
+        </div>
+        <div class="col-md-offset-3 col-md-9">
+            <input type="submit" value="Allocate" class="btn btn-success" />
+        </div>
+    }
+    @if (ViewBag.Message != null)
+    {
+        <h3>@ViewBag.Message</h3>
+    }
+</div>
+@section Scripts {
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/mdtimepicker.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#FromTime').mdtimepicker();
+            $('#ToTime').mdtimepicker();
+
+            $("#Allocate").validate({
+                rules: {
+                    CourseId: "required"
+                },
+                messages: {
+                    CourseId: "Please select the Course Name!"
+                }
+            });
+            $("#DepartmentId").change(function () {
+                $("#CourseId").empty();
+                var deptId = $("#DepartmentId").val();
+                var json =
+                {
+                    departmentId: deptId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCourseByDepartmentId", "AllocateCllassroom")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#CourseId").append('<option value="">--Select---</option');
+                        $.each(data, function (key, value) {
+                            $("#CourseId").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+                        });
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}
+

@@ -1,0 +1,41 @@
+﻿@model UniversityManagementSystemWebApp.Models.Course
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_LayoutPage12.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyIndex</h2>
+@section scripts {
+    <style>
+		/**
+ * Loading animation like the one seen on http://www.freeger.com/projects/contextad/ with CSS
+ * Caveat: Not DRY. The content needs to be repeated in a data- attribute (or directly in the CSS).
+ */
+
+        body {
+            background: #ccc51c;
+            min-height: 100%;
+        }
+
+        h1 {
+            position: absolute;
+            left: 50%;
+            margin-left: -1.9em;
+            color: hsla(0, 0%, 100%, .3);
+            font: 900 800% Baskerville, 'Palatino Linotype', Palatino, serif;
+        }
+
+
+
+        h1:before {
+            content: attr(data-content);
+            position: absolute;
+            overflow: hidden;
+            max-width: 7em;
+            color: white;
+            animation: loading 5s linear;
+        }
+    </style>
+}
+    <h1 data-content="UNIVERSITY">UNIVERSITY</h1>

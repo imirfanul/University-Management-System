@@ -1,0 +1,124 @@
+﻿@model UniversityManagementSystemWebApp.Models.EnrollCourse
+@{
+    //Layout = null;
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <style>
+        .field-validation-error {
+            margin-left: 140px;
+            color: red;
+        }
+        #wrapper {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        input {
+            width: 240px;
+        }
+    </style>
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<div id="wrapper">
+    <hr/>
+    <h3>Enroll in a Course</h3>
+    <hr/>
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.RegistrationNo, new {@class = "col-md-3 control-label"})
+                @Html.DropDownListFor(x => x.RegistrationNo, new SelectList(ViewBag.StudentRegNo, "Value", "Text"), new {@class = "form-control"})
+                @Html.ValidationMessageFor(x => x.RegistrationNo)
+            </div>
+            <div class="form-group">
+                @Html.Label("Name", new {@class = "col-md-3 control-label"})
+                @Html.TextBox("Name", null, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.Label("Email", new {@class = "col-md-3 control-label"})
+                @Html.TextBox("Email", null, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.Label("Department", new {@class = "col-md-3 control-label"})
+                @Html.TextBox("DepartmentId", null, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.CourseId, new {@class = "col-md-3 control-label"})
+                <select id="CourseId" name="CourseId" class="form-control">
+                    <option value="">--Select--</option>
+                </select>
+                @Html.ValidationMessageFor(x => x.CourseId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Date, new {@class = "col-md-3 control-label"})
+                <input type="text" id="Date" name="Date" class="form-control" value="@DateTime.Now.ToShortDateString()"/>
+                @Html.ValidationMessageFor(x => x.Date)
+            </div>
+            <div class="col-md-offset-3 col-md-9">
+                <input type="submit" value="Enroll" class="btn btn-success" />
+        </div>
+            
+        }
+        @if (ViewBag.Message != null)
+        {
+            <h3>@ViewBag.Message</h3>
+        }
+</div>
+@section Scripts {
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#Name").prop('disabled', true);
+            $("#Email").prop('disabled', true);
+            $("#DepartmentId").prop('disabled', true);
+            $("#Date").datepicker();
+            
+            $("#RegistrationNo").change(function() {
+                var regId = $("#RegistrationNo").val();
+                var json =
+                {
+                    registrationId: regId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RegistrationNo", "EnrollCourse")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            $("#Name").val(value.Name);
+                            $("#Email").val(value.Email);
+                            $("#DepartmentId").val(value.Department);
+                        });
+                    }
+                });
+            });
+
+            $("#RegistrationNo").change(function () {
+                $("#CourseId").empty();
+                var regId = $("#RegistrationNo").val();
+                var json =
+                {
+                    registrationId: regId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RegistrationNo", "EnrollCourse")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#CourseId").append('<option value="">--Select--</option>');
+                        $.each(data, function(key, value) {
+                            $("#CourseId").append('<option value=' + value.CourseId + '>' + value.CourseName + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

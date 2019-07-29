@@ -1,0 +1,66 @@
+﻿
+@using UniversityManagementSystemWebApp.Models
+@model List<UniversityManagementSystemWebApp.Models.Department>
+
+@{
+    //Layout = null;
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Department> departmentList = Model;
+}
+
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<style>
+    /*#wrapper {
+        width: 400px;
+        margin: 0 auto;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }*/
+
+    th {
+        background-color: skyblue;
+        color: white;
+    }
+</style>
+
+<div align="center" class="container">
+    <fieldset>
+        <legend>View All Departments</legend>
+        
+        <table class="display" style="width: 50%" id="example">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+            </tr>
+            @foreach (Department department in departmentList)
+            {
+                <tr>
+                    <td>@department.Code</td>
+                    <td>@department.Name</td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+}
+

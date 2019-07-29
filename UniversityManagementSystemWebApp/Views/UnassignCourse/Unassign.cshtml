@@ -1,0 +1,40 @@
+﻿@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #wrapper {
+        width: 60%;
+        margin: 0 auto;
+    }
+</style>
+<hr />
+<h3>Unassign All Courses</h3>
+<hr />
+<div id="wrapper">
+    @using (Html.BeginForm(null, null, FormMethod.Post))
+    {
+        <div class="col-md-offset-3 col-md-9">
+            <input type="submit" value="Unassign Course" class="btn btn-danger" data-confirm="Are you sure to Unassign All Courses?" />
+        </div>
+       
+    }
+    @if (@ViewBag.Output != null)
+    {
+        <h3>@ViewBag.Output</h3>
+    }
+</div>
+@section scripts{
+
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            jQuery('[data-confirm]').click(function (e) {
+                if (!confirm(jQuery(this).attr("data-confirm"))) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,90 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using UniversityManagementSystemWebApp.Models
+@model UniversityManagementSystemWebApp.Models.Course
+@{
+    Layout = null;
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #errmsg {
+        color: red;
+    }
+
+    .field-validation-error {
+        margin-left: 140px;
+        color: red;
+    }
+
+    #wrapper {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    input {
+        width: 240px;
+    }
+</style>
+<div id="wrapper">
+    <hr />
+    <h3>Save Course</h3>
+    <hr />
+    @using (Html.BeginForm(null, null, FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(x => x.Code, new { @class = "col-md-3 control-label" })
+            @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Code)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new { @class = "col-md-3 control-label" })
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Credit, new { @class = "col-md-3 control-label" })
+            @Html.TextBoxFor(x => x.Credit, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Credit)
+            <span id="errmsg"></span>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Descrition,"Description ", new { @class = "col-md-3 control-label" })
+            @Html.TextAreaFor(x => x.Descrition, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DepartmentId, new { @class = "col-md-3 control-label" })
+            @Html.DropDownListFor(x => x.DepartmentId, new SelectList(ViewBag.Departments, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.DepartmentId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.SemesterId, new { @class = "col-md-3 control-label" })
+            @Html.DropDownListFor(x => x.SemesterId, new SelectList(ViewBag.Semesters, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.SemesterId)
+        </div>
+        <div class="col-md-offset-3 col-md-9">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+
+    }
+    @if (ViewBag.Message != null)
+    {
+        <h3>@ViewBag.Message</h3>
+    }
+</div>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Credit").keypress(function (e) {
+            //if not number display error message
+            if (e.which != 8 && e.which != 0 && (e.which < 45 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("only number allowed").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+</script>

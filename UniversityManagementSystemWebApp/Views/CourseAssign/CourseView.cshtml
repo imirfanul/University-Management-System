@@ -1,0 +1,83 @@
+﻿
+@{
+    //Layout = null;
+    //Layout = "~/Views/Shared/_MyLayout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #wrapper {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    input {
+        width: 240px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    th {
+        background-color: skyblue;
+        color: white;
+    }
+</style>
+<div id="wrapper">
+    <hr/>
+    <h3>Course Statics</h3>
+    <hr/>
+    @using (Html.BeginForm(null, null, FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.Label("Department", new {@class = "col-md-3 control-label"})
+            @Html.DropDownList("DepartmentId", new SelectList(ViewBag.Departments, "Value", "Text"), new { @class = "form-control" })          
+        </div>        
+        <h4>Course Information</h4>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name/Title</th>
+                <th>Semester</th>
+                <th>Assigned To</th>
+            </tr>
+            </thead>
+            <tbody id="courseInfo"></tbody>
+
+        </table>
+    }
+</div>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#DepartmentId").change(function () {
+                var deptId = $("#DepartmentId").val();
+                var json =
+                {
+                    departmentId: deptId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetDepartmentByCourseView", "CourseAssign")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#courseInfo").empty();
+                        $.each(data, function (key, value) {
+                            $("#courseInfo").append('<tr> <td>' + value.Code + '</td> <td>' + value.Name + '</td> <td>' + value.Semester + '</td> <td>' + value.Teacher + '</td> </tr>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>

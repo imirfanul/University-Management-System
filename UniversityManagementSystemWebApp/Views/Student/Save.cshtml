@@ -1,0 +1,116 @@
+﻿@using UniversityManagementSystemWebApp.Models
+@model UniversityManagementSystemWebApp.Models.Student
+@{
+    ViewBag.Title = "Register Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <style>
+        .field-validation-error {
+            margin-left: 180px;
+            color: red;
+        }
+        #wrapper {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        input {
+            width: 240px;
+        }
+        #student table {
+            border-collapse: collapse;
+            width: 900px;
+        }
+
+        #student th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        #student tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #student th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+<div id="wrapper">
+    <hr/>
+    <h3>Register Student</h3>
+    <hr/>
+    @using (Html.BeginForm(null, null, FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new {@class = "col-md-3 control-label"})
+            @Html.TextBoxFor(x => x.Name, null, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email, new {@class = "col-md-3 control-label"})
+            @Html.TextBoxFor(x => x.Email, null, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Contact, new {@class = "col-md-3 control-label"})
+            @Html.TextBoxFor(x => x.Contact, null, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.Contact)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.RegisterDate, new {@class = "col-md-3 control-label"})
+            <input type="text" id="RegisterDate" name="RegisterDate" class="form-control" value="@DateTime.Now.ToShortDateString()"/>
+            @Html.ValidationMessageFor(x => x.RegisterDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address, new {@class = "col-md-3 control-label"})
+            @Html.TextAreaFor(x => x.Address, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.Address)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DepartmentId, new {@class = "col-md-3 control-label"})
+            @Html.DropDownListFor(x => x.DepartmentId, new SelectList(ViewBag.Departments, "Value", "Text"), new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.DepartmentId)
+        </div>
+        <div class="col-md-offset-3 col-md-9">
+            <input type="submit" value="Register" class="btn btn-success" />
+        </div>
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <p>@ViewBag.Message</p>
+    }
+</div>
+@section Scripts {
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            //$("#student").hide();
+            $("#Register").click(function() {
+                var registrationNumber = @ViewBag.StudentInfo
+                $("#Output").val(registrationNumber).show();
+                //$("#student").show();
+
+            });
+            $("#RegisterDate").datepicker();
+            //$("#RegisterDate").on("change", function() {
+            //    var selected = $(this).val();
+            //    $("#RegisterDate").val(selected);
+            //});
+
+            $("#Contact").keypress(function(e) {
+                //if not number display error message
+                if (e.which != 8 && e.which != 0 && (e.which < 42 || e.which > 57)) {
+                    //display error message
+                    $("#errmsg").html("only number allowed").show().fadeOut("slow");
+                    return false;
+                }
+            });
+        });
+    </script>
+}
